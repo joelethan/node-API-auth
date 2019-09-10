@@ -1,0 +1,27 @@
+{
+  "name": "node-API-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelethan/node-API-auth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joelethan/node-API-auth/issues"
+  },
+  "homepage": "https://github.com/joelethan/node-API-auth#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}
