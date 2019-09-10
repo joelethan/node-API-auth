@@ -1,15 +1,21 @@
 const express = require('express');
 const app = express();
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
+dotenv.config();
+
 // Connect tp DB
-mongoose.connect('mongodb+srv://joel:166091mongodb@cluster0-qwjvn.mongodb.net/test?retryWrites=true&w=majority',
+mongoose.connect(process.env.DB_CONNECT,
 { useUnifiedTopology: true },
 ()=> console.log('Connected to DB'));
 
 
 // Import Routes
 const authRoute = require('./routes/auth');
+
+// Middlewares
+app.use(express.json());
 
 // Route Middlewares
 app.use('/api/user', authRoute);
