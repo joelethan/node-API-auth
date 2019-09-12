@@ -30,6 +30,22 @@ router.post('/register', async (req, res)=>{
         res.status('400').send(err)
     }
 })
+// Login
+router.post('/login', async (req, res)=>{
+
+    const { error } = loginValidation(req.body);
+    if (error) return res.status(400).send({'error': error.details[0].message});
+
+    // Check if email exists
+    const user = await User.findOne({email: req.body.email});
+    if(!user) return res.status(400).send({'error': 'Invalid Credentials'});
+
+    // Check password
+    const validPassword = await bcrypt.compare(req.body.password, user.password)
+    if(!validPassword) return res.status(400).send({'error': 'Invalid Credentials'})
+
+    res.send({'message': 'Logged In'})
+})
 
 
 module.exports = router;
