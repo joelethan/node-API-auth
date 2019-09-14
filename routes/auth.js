@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const User = require('../model/User')
-const { registerValidation, loginValidation } = require('../validations')
-const bcrypt = require('bcryptjs')
+const User = require('../model/User');
+const { registerValidation, loginValidation } = require('../validations');
+const bcrypt = require('bcryptjs');
 
 
 router.post('/register', async (req, res)=>{
@@ -22,12 +22,12 @@ router.post('/register', async (req, res)=>{
         name: req.body.name,
         email: req.body.email,
         password: passwordHash
-    })
+    });
     try {
         const savedUser = await user.save();
         res.send(savedUser);
     } catch (err) {
-        res.status('400').send(err)
+        res.status('400').send(err);
     }
 })
 // Login
@@ -41,10 +41,12 @@ router.post('/login', async (req, res)=>{
     if(!user) return res.status(400).send({'error': 'Invalid Credentials'});
 
     // Check password
-    const validPassword = await bcrypt.compare(req.body.password, user.password)
-    if(!validPassword) return res.status(400).send({'error': 'Invalid Credentials'})
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    if(!validPassword) return res.status(400).send({'error': 'Invalid Credentials'});
 
-    res.send({'message': 'Logged In'})
+    // Create token
+    const token = jwt.sign({_id: user._id}, process.env.SECRET_TOKEN)
+    res.header('auth-token', token).send(token)
 })
 
 module.exports = router;
