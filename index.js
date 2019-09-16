@@ -13,11 +13,13 @@ mongoose.connect(process.env.DB_CONNECT,
 
 // Import Routes
 const authRoute = require('./routes/auth');
+const postsRoute = require('./routes/posts');
 
 // Middlewares
 app.use(express.json());
 
 // Route Middlewares
 app.use('/api/user', authRoute);
+app.use('/api/posts', postsRoute);
 
 app.listen(3000, ()=>console.log('Serve Up and Running'));
